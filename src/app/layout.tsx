@@ -29,11 +29,9 @@ export default function RootLayout({
     return (
         <html
             lang="en"
-            className={`${marckScript.variable} ${markaziText.variable}`}
+            className={`${marckScript.variable} ${markaziText.variable} h-full w-full bg-pink`}
         >
-            <body className="relative flex w-full flex-col bg-pink">
-                {children}
-            </body>
+            <body className="h-full w-full">{children}</body>
         </html>
     );
 }

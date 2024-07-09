@@ -10,15 +10,18 @@ const tinycolor = require("tinycolor2");
 export default function BackFlap({ colour }: { colour?: ColourType }) {
     const router = useRouter();
 
-    const backgroundColor = tinycolor(colour?.data?.attributes?.hexCode)
-        .lighten(5)
-        .toString();
-    const darkerColor = tinycolor(colour?.data?.attributes?.hexCode)
-        .darken(5)
-        .toString();
-    const darkestColor = tinycolor(colour?.data?.attributes?.hexCode)
-        .darken(15)
-        .toString();
+    const luminanceIsBright =
+        tinycolor(colour?.data.attributes.hexCode).getLuminance() >= 0.5;
+
+    const backgroundColour = luminanceIsBright
+        ? tinycolor(colour?.data?.attributes?.hexCode).lighten(5).toString()
+        : tinycolor(colour?.data.attributes.hexCode).darken(5).toString();
+    const colour1 = luminanceIsBright
+        ? tinycolor(colour?.data?.attributes?.hexCode).darken(5).toString()
+        : tinycolor(colour?.data.attributes.hexCode).lighten(15).toString();
+    const colour2 = luminanceIsBright
+        ? tinycolor(colour?.data?.attributes?.hexCode).darken(15).toString()
+        : tinycolor(colour?.data.attributes.hexCode).lighten(45).toString();
 
     const backgroundPathInitial = "M160 0 0 160V0h160Z";
     const backgroundPathHover = "M200 0 0 200V0h200Z";
@@ -51,11 +54,9 @@ export default function BackFlap({ colour }: { colour?: ColourType }) {
         <div
             className="fixed z-30 float-left h-min w-min"
             onMouseEnter={() => {
-                console.log(true);
                 openFlap();
             }}
             onMouseLeave={() => {
-                console.log(false);
                 closeFlap();
             }}
         >
@@ -70,7 +71,7 @@ export default function BackFlap({ colour }: { colour?: ColourType }) {
                 strokeLinejoin="round"
                 strokeMiterlimit={2}
             >
-                <animated.path d={spring.backgroundD} fill={backgroundColor} />
+                <animated.path d={spring.backgroundD} fill={backgroundColour} />
                 <animated.path d={spring.flapD} fill="url(#back-flap)" />
                 <animated.defs>
                     <linearGradient
@@ -82,16 +83,8 @@ export default function BackFlap({ colour }: { colour?: ColourType }) {
                         gradientUnits="userSpaceOnUse"
                         gradientTransform="matrix(80 80 -80 80 80 80)"
                     >
-                        <stop
-                            offset="0"
-                            stopColor={darkestColor}
-                            stopOpacity={1}
-                        />
-                        <stop
-                            offset="1"
-                            stopColor={darkerColor}
-                            stopOpacity={1}
-                        />
+                        <stop offset="0" stopColor={colour2} stopOpacity={1} />
+                        <stop offset="1" stopColor={colour1} stopOpacity={1} />
                     </linearGradient>
                 </animated.defs>
             </animated.svg>

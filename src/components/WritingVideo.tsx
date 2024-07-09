@@ -7,8 +7,7 @@ const tinycolor = require("tinycolor2");
 
 export default function WritingVideo({
     colour,
-    media,
-    gradient,
+    writingMedia,
 }: WritingType["attributes"]) {
     const colourNoAlpha = tinycolor(
         colour?.data?.attributes?.hexCode,
@@ -28,25 +27,27 @@ export default function WritingVideo({
         radial: `radial-gradient(circle, ${colourFullAlpha} 55%, ${colourNoAlpha} 60%)`,
     };
 
-    const [gradientType, setGradientType] = useState<string>("radial");
-
-    useEffect(() => {
-        if (gradient) setGradientType(gradient);
-    }, []);
-
     return (
         <div className="pointer-events-none relative right-0 lg:fixed lg:top-1/2 lg:max-w-[50%] lg:-translate-y-1/2">
             <div
                 className="absolute left-0 top-0 z-10 h-full w-full"
                 style={{
-                    background: gradientType
-                        ? gradients[gradientType]
+                    background: writingMedia?.data.attributes.gradient
+                        ? gradients[writingMedia.data.attributes.gradient]
                         : "unset",
                 }}
             ></div>{" "}
             <video autoPlay loop muted className="scale-x-[1]">
                 {/* <source src={video.url + ".mp4"} type="video/mp4" /> */}
-                <source src={media?.data?.attributes?.url} type="video/webm" />
+                <source
+                    src={
+                        (process.env.NEXT_PUBLIC_STRAPI_URL || "") +
+                        writingMedia?.data?.attributes?.media?.data.attributes
+                            ?.url
+                    }
+                    type="video/webm"
+                />
+                <source src="" type="video/webm" />
                 Your browser does not support the video tag. There would be a
                 nice one here...
             </video>

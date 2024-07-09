@@ -10,12 +10,12 @@
 }
 
 .sticky-note > div > p {
-    color: rgba(0, 0, 0, 0.6);
+    opacity: 0.6;
     transition-property: all;
     transition-timing-function: ease-in-out;
     transition-duration: 300ms;
 }
 
 .sticky-note:hover > div > p {
-    color: black;
+    opacity: 1;
 }

@@ -11,10 +11,9 @@ interface PoemParams {
 
 const getPoem = async (slug: string): Promise<WritingType> => {
     const poemData = await strapiFetch(
-        `writings?filters[slug][$eq]=${slug}&populate=*`,
+        `writings?filters[slug][$eq]=${slug}&populate[0]=colour&populate[1]=writingMedia.media`,
         "GET",
     );
-    console.log(poemData.length);
     return poemData.length > 0 ? poemData[0] : null;
 };
 
@@ -28,7 +27,7 @@ export default async function Poem({ params: { slug } }: PoemParams) {
             title={poem.attributes.title}
             type={poem.attributes.type}
             content={poem.attributes.content}
-            media={poem.attributes.media}
+            writingMedia={poem.attributes.writingMedia}
             gradient={poem.attributes.gradient}
             colour={poem.attributes.colour}
         />

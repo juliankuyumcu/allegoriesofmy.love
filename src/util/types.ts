@@ -1,6 +1,6 @@
 export type ColourType = {
-    data?: {
-        attributes?: {
+    data: {
+        attributes: {
             label?: string;
             hexCode?: string;
         };
@@ -8,15 +8,24 @@ export type ColourType = {
 };
 
 export type MediaType = {
-    data?: {
+    data: {
         attributes?: {
             url?: string;
         };
     };
 };
 
+export type WritingMediaType = {
+    data: {
+        attributes: {
+            media?: MediaType;
+            gradient?: string;
+        };
+    };
+};
+
 export type WritingType = {
-    id?: number;
+    id: number;
     attributes: {
         title?: string;
         type?: string;
@@ -24,7 +33,7 @@ export type WritingType = {
         content?: string;
         slug?: string;
         gradient?: string;
-        media?: MediaType;
+        writingMedia?: WritingMediaType;
         colour?: ColourType;
     };
 };

@@ -16,12 +16,17 @@ export default function StickyNote({
     preview,
     colour,
 }: WritingType["attributes"]) {
-    const darkerColor: string = tinycolor(colour?.data?.attributes?.hexCode)
-        .darken(10)
-        .toString();
-    const darkestColor: string = tinycolor(colour?.data?.attributes?.hexCode)
-        .darken(12)
-        .toString();
+    const luminanceIsBright: boolean =
+        tinycolor(colour?.data.attributes.hexCode).getLuminance() >= 0.5;
+
+    const colour1: string = luminanceIsBright
+        ? tinycolor(colour?.data?.attributes?.hexCode).darken(10).toString()
+        : tinycolor(colour?.data.attributes.hexCode).lighten(30).toString();
+    const colour2: string = luminanceIsBright
+        ? tinycolor(colour?.data?.attributes?.hexCode).darken(12).toString()
+        : tinycolor(colour?.data.attributes.hexCode).lighten(36).toString();
+
+    const textColour: string = !luminanceIsBright ? "white" : "black";
 
     // set 1 - curvy
     // M280 280a33 33 0 0 0 16 0l-16 16a33 33 0 0 0 0-16Z
@@ -70,17 +75,18 @@ export default function StickyNote({
                 styles["sticky-note"]
             }
             onMouseEnter={() => {
-                console.log(true);
                 openFlap();
             }}
             onMouseLeave={() => {
-                console.log(false);
                 closeFlap();
             }}
         >
-            <div className="relative z-10 h-full w-full overflow-hidden font-marck-script">
+            <div
+                className="relative z-10 h-full w-full overflow-hidden font-marck-script"
+                style={{ color: textColour }}
+            >
                 <h1 className="mb-1 truncate text-xl">{title}</h1>
-                <h6 className="mb-4 text-xs text-black/60">{type}</h6>
+                <h6 className="mb-4 text-xs">{type}</h6>
 
                 <p className="line-clamp-[7] text-base leading-snug">
                     {preview}
@@ -112,12 +118,8 @@ export default function StickyNote({
                         y2="280"
                         gradientUnits="userSpaceOnUse"
                     >
-                        <stop stopColor={darkestColor} />
-                        <stop
-                            offset="1"
-                            stopColor={darkerColor}
-                            stopOpacity=".5"
-                        />
+                        <stop stopColor={colour2} />
+                        <stop offset="1" stopColor={colour1} stopOpacity=".5" />
                     </animated.linearGradient>
                 </animated.defs>
             </animated.svg>
