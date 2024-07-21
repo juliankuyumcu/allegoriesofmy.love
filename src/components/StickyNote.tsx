@@ -10,12 +10,13 @@ import { WritingType } from "@/util/types";
 const tinycolor = require("tinycolor2");
 
 export default function StickyNote({
+    index,
     title,
     slug,
     type,
     preview,
     colour,
-}: WritingType["attributes"]) {
+}: { index?: number } & WritingType["attributes"]) {
     const luminanceIsBright: boolean =
         tinycolor(colour?.data.attributes.hexCode).getLuminance() >= 0.5;
 
@@ -74,6 +75,7 @@ export default function StickyNote({
                 "relative aspect-square w-[18.5em] overflow-visible px-8 pb-10 pt-6 " +
                 styles["sticky-note"]
             }
+            style={{ "--n": index } as React.CSSProperties}
             onMouseEnter={() => {
                 openFlap();
             }}
@@ -125,7 +127,7 @@ export default function StickyNote({
             </animated.svg>
 
             <Link
-                href={`/poem/${slug}`}
+                href={`/${type?.toLowerCase().replaceAll(" ", "-")}/${slug}`}
                 className="absolute left-0 top-0 z-30 h-full w-full"
             ></Link>
         </div>

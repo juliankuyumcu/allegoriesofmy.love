@@ -3,13 +3,13 @@ import { WritingType } from "@/util/types";
 import { strapiFetch } from "@/util/fetch";
 import { notFound } from "next/navigation";
 
-interface PoemParams {
+interface ShortStoryParams {
     params: {
         slug: string;
     };
 }
 
-const getPoem = async (slug: string): Promise<WritingType> => {
+const getShortStory = async (slug: string): Promise<WritingType> => {
     const poemRes = await strapiFetch({
         method: "GET",
         slug: "writings",
@@ -24,19 +24,21 @@ const getPoem = async (slug: string): Promise<WritingType> => {
     return poemRes.data.length > 0 ? poemRes.data[0] : null;
 };
 
-export default async function Poem({ params: { slug } }: PoemParams) {
-    const poem = await getPoem(slug);
+export default async function ShortStory({
+    params: { slug },
+}: ShortStoryParams) {
+    const shortStory = await getShortStory(slug);
 
-    return !poem ? (
+    return !shortStory ? (
         notFound()
     ) : (
         <Writing
-            title={poem.attributes.title}
-            type={poem.attributes.type}
-            content={poem.attributes.content}
-            writingMedia={poem.attributes.writingMedia}
-            gradient={poem.attributes.gradient}
-            colour={poem.attributes.colour}
+            title={shortStory.attributes.title}
+            type={shortStory.attributes.type}
+            content={shortStory.attributes.content}
+            writingMedia={shortStory.attributes.writingMedia}
+            gradient={shortStory.attributes.gradient}
+            colour={shortStory.attributes.colour}
         />
     );
 }

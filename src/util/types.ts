@@ -9,7 +9,7 @@ export type ColourType = {
 
 export type MediaType = {
     data: {
-        attributes?: {
+        attributes: {
             url?: string;
         };
     };

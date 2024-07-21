@@ -3,6 +3,18 @@
     transition-property: transform;
     transition-timing-function: ease-in-out;
     transition-duration: 300ms;
+    /* opacity: 0;
+    animation: fadeIn 300ms ease-in calc(var(--n) * 100ms) 1;
+    animation-fill-mode: forwards; */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .sticky-note:hover {
@@ -18,4 +30,45 @@
 
 .sticky-note:hover > div > p {
     opacity: 1;
+}
+
+.sticky-note-placeholder {
+    opacity: 0;
+    animation: fadeIn 300ms linear 1s 1 normal forwards;
+}
+
+.sticky-note-placeholder-shine {
+    bottom: 0;
+    transform-origin: top left;
+    transform: translateY(100%) translateX(50%) rotateZ(-45deg);
+    animation:
+        swipeLeft 500ms linear 0s infinite normal backwards,
+        delayAnimation 1500ms linear infinite;
+}
+
+@keyframes swipeLeft {
+    from {
+        transform: translateY(100%) translateX(50%) rotateZ(-45deg);
+    }
+    to {
+        transform: translateY(100%) translateX(-60%) rotateZ(-45deg);
+    }
+}
+
+@keyframes delayAnimation {
+    0% {
+        opacity: 1;
+    }
+
+    33.33% {
+        opacity: 1;
+    }
+
+    33.34% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }

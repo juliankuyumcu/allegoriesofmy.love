@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import BackFlap from "./BackFlap";
 import WritingVideo from "./WritingVideo";
 import { WritingType } from "@/util/types";
@@ -17,7 +17,7 @@ export default function Writing({
     colour,
 }: WritingType["attributes"]) {
     const topRef = useRef<HTMLDivElement>(null);
-
+    console.log(type);
     const textColour =
         tinycolor(colour?.data.attributes.hexCode).getLuminance() >= 0.5
             ? "black"
@@ -45,10 +45,26 @@ export default function Writing({
                 className="xs:h-20 z-10 mx-0 w-max max-w-[80%] py-20 font-marck-script max-lg:mx-[10%] sm:py-40 md:py-40 lg:relative lg:left-[20%] lg:max-w-[30%] lg:py-48"
                 style={{ backgroundColor: colour?.data.attributes.hexCode }}
             >
-                <h1 className="mb-4 text-2xl md:text-[40px]">{title}</h1>
-                <p className="whitespace-pre-line text-base md:text-2xl">
-                    {content}
-                </p>
+                {type === "Poem" && (
+                    <>
+                        <h1 className="mb-8 text-2xl md:text-[40px]">
+                            {title}
+                        </h1>
+                        <p className="whitespace-pre-line text-base md:text-2xl">
+                            {content}
+                        </p>
+                    </>
+                )}
+                {type === "Short Story" && (
+                    <>
+                        <h1 className="mb-8 text-2xl md:text-[32px]">
+                            {title}
+                        </h1>
+                        <p className="whitespace-pre-line font-markazi-text text-base md:text-2xl">
+                            {content}
+                        </p>
+                    </>
+                )}
             </div>
             <div
                 className="fixed bottom-0 z-20 h-20 w-full sm:h-40 md:h-40 lg:h-48"
