@@ -31,6 +31,11 @@ export default function RootLayout({
             lang="en"
             className={`${marckScript.variable} ${markaziText.variable} h-full w-full bg-pink`}
         >
+	    <head>
+	    	<title>allegoriesofmy.love</title>
+		<meta name="author" content="Julian K." />
+		<meta name="description" content="An archive of poems, short stories, and art that aim for truth and humanity..." />
+	    </head>
             <body className="h-full w-full">{children}</body>
         </html>
     );
