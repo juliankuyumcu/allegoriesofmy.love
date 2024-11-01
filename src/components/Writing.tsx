@@ -17,7 +17,6 @@ export default function Writing({
     colour,
 }: WritingType["attributes"]) {
     const topRef = useRef<HTMLDivElement>(null);
-    console.log(type);
     const textColour =
         tinycolor(colour?.data.attributes.hexCode).getLuminance() >= 0.5
             ? "black"

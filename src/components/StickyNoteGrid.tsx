@@ -184,14 +184,12 @@ export default function StickyNoteGrid() {
 
     useEffect(() => {
         if (bottomInView && !topInView && !isFetchingRef.current.down) {
-            console.log("BOTTOM IN");
             getMoreWritingsDown();
         }
     }, [topInView, bottomInView, writings]);
 
     useEffect(() => {
         if (topInView && !bottomInView && !isFetchingRef.current.up) {
-            console.log("TOP IN");
             getMoreWritingsUp();
         }
     }, [topInView, bottomInView, writings]);
@@ -285,7 +283,7 @@ export default function StickyNoteGrid() {
                                   : null;
 
                         return !writing ? (
-                            <div ref={ref}>
+                            <div key={i} ref={ref}>
                                 <StickyNotePlaceholder />
                             </div>
                         ) : (
